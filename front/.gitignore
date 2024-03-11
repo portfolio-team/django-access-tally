@@ -1,0 +1,21 @@
+/node_modules
+/build
+.angular
+.webpack-cache
+/.sass-cache
+package-lock.json
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+.history
+
+# compiled output
+/tmp
+/out-tsc
+
+
