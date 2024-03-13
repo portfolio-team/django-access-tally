@@ -22,33 +22,41 @@ env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # .envファイルから各環境変数を読み込む
-SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG')
-DB_USERS = env.list('DB_USERS')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-98d8y7_=097*@3n(xglr1xbuf9n=u6dtji!lxh-=0khf-pbl69'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
+
+AUTH_USER_MODEL = 'poikatu.User'
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'poikatu.apps.PoikatuAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
+
+if env.bool('IS_PRODUCTION') is not True:
+    INSTALLED_APPS += (
+        'silk',
+        'rest_framework_swagger',
+    )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,7 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
